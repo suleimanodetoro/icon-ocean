@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "relative h-full font-san antialiased")}>
+      <body className={cn("relative h-full font-san antialiased",inter.className)}>
         {/* The following will  */}
         <main className='relative flex flex-col min-h-screen'>
           <div className='flex-grow flex-1'>
