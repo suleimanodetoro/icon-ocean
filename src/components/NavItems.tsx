@@ -7,7 +7,7 @@ import NavItem from "./NavItem";
 const NavItems = () => {
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
 //   isAnyOpen checks if any nav item is open at all
-  const isAnyOpen = activeIndex != null
+  const isAnyOpen = activeIndex !== null
 
 
   return (
