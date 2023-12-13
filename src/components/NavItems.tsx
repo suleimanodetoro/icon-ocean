@@ -1,17 +1,40 @@
 "use client";
 
 import { PRODUCT_CATEGROIES } from "@/config";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import NavItem from "./NavItem";
+import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 
 const NavItems = () => {
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
 //   isAnyOpen checks if any nav item is open at all
   const isAnyOpen = activeIndex !== null
 
+//   use ref so clicking anywhere cancels the dropdown
+// This type is simply telling react assign this to a div element later
+// For this, we will be using the mouse event hook I copied haha
+const navRef = useRef<HTMLDivElement |null >(null)
+useOnClickOutside(navRef, () => setActiveIndex(null))
+
+// on "Escape" key press, collapse the nav item dropdrowns
+useEffect(()=>{
+    const handler = (event: KeyboardEvent) => {
+        if (event.key === 'Escape'){
+            setActiveIndex(null);
+        }
+    }
+
+    // trigger the event
+    document.addEventListener("keydown", handler)
+    // clean up after using the event listner
+
+    return () => {
+        document.removeEventListener("keydown", handler)
+    }
+}, [])
 
   return (
-    <div className="flex gap-4 h-full ">
+    <div className="flex gap-4 h-full " ref={navRef}>
       {PRODUCT_CATEGROIES.map((category, index) => {
         // handle open toggles the open/close state of nav items
         // the function is defined for each nav item
