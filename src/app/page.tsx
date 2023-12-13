@@ -46,7 +46,7 @@ export default function Home() {
             <Link className={buttonVariants()} href={"/products"}>
               Browse Trending Icon Packs
             </Link>
-            <Button variant={"ghost"}>Our Quality Promsie &rarr; </Button>
+            <Button variant={"ghost"}>Our Quality Promise &rarr; </Button>
           </div>
         </div>
         {/* TODO: List products */}
