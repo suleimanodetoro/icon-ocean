@@ -2,15 +2,21 @@
 import {
   Sheet,
   SheetContent,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
 import { ShoppingCartIcon } from "lucide-react";
 import { Separator } from './ui/separator'
+import { formatPrice } from "@/lib/utils";
+import Link from "next/link";
+import Image from "next/image";
+import { buttonVariants } from "./ui/button";
 
 const Cart = () => {
   const itemCount = 0;
+  const fee = 10
   return (
     <Sheet>
       <SheetTrigger className="group m-2 flex items-center p-2">
@@ -33,10 +39,10 @@ const Cart = () => {
               {/* TODO: Cart Logic */}
               Cart Items
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 pr-6">
                 {/* use the shad cn seperator */}
                 <Separator/>
-                <div className="space-y-1.5 pr-6">
+                <div className="space-y-1.5 text-sm">
                     {/* shipping details */}
                     <div className="flex">
                         <span className="flex-1">Shipping</span>
@@ -46,16 +52,39 @@ const Cart = () => {
                     {/* transaction fee */}
                     <div className="flex">
                         <span className="flex-1">Transaction Fee</span>
-                        <span>$1</span>
+                        <span>{formatPrice(fee)}</span>
+
+                    </div>
+                    {/* Cart Total */}
+                    <div className="flex">
+                        <span className="flex-1">Total</span>
+                        <span>{formatPrice(fee)}</span>
 
                     </div>
                 </div>
+
+                {/* Sheet Footer */}
+                <SheetFooter>
+                    {/* Using asChild to disable default feature of wrapping child elements as buttons so we can use custom link correctly*/}
+                    <SheetTrigger asChild className="">
+                        <Link href={"/cart" } className={buttonVariants({
+                            className:"w-full"
+                        })}>Continue to Checkout</Link>
+                    </SheetTrigger>
+                </SheetFooter>
                 
             </div>
           </>
         ) : (
-          <div>
-            
+          <div className="flex h-full flex-col items-center justify-center space-y-1 ">
+            <div aria-hidden className="relative mb-4 h-60 w-60 text-muted-foreground">
+                <Image src="/hippo-empty-cart.png" fill alt="Empty cart image"/>
+            </div>
+            <div className="text-xl font-semibold">Looks empty...🫣</div>
+            <SheetTrigger asChild>
+                <Link href="/product" className={buttonVariants({variant: "link", size:"sm", className: "text-sm text-muted-foreground" })}>Add items to your cart to checkout🛒</Link>
+
+            </SheetTrigger>
           </div>
         )}
       </SheetContent>
